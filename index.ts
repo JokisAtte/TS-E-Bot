@@ -6,7 +6,7 @@ if (process.env.TOKEN === "undefined")
 const bot = new Telegraf(process.env.TOKEN as string);
 
 bot.command("help", (ctx) => ctx.reply("Olen elossa"));
-
+console.log(process.env.NODE_ENV);
 bot.launch({
   webhook: {
     domain: "https://wise-houses-stare-85-76-145-100.loca.lt/",
