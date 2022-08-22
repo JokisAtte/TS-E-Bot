@@ -9,7 +9,7 @@ bot.command("help", (ctx) => ctx.reply("Olen elossa"));
 
 bot.launch({
   webhook: {
-    domain: "https://twelve-teams-nail-88-193-171-164.loca.lt",
+    domain: "https://wise-houses-stare-85-76-145-100.loca.lt/",
     port: 3000,
   },
 });
