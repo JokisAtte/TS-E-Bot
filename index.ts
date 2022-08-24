@@ -1,15 +1,21 @@
 import "dotenv/config";
 import { Telegraf } from "telegraf";
-
+import { getUsers } from "./src/database";
 if (process.env.TOKEN === "undefined")
   throw new Error("Bot token must be provided");
 const bot = new Telegraf(process.env.TOKEN as string);
 
 bot.command("help", (ctx) => ctx.reply("Olen elossa"));
+bot.command("kaikki", (ctx) => {
+  console.log("mäyy");
+  console.log("result", getUsers());
+  console.log("valmis");
+  ctx.reply("Kaikki käyttäjät");
+});
 console.log(process.env.NODE_ENV);
 bot.launch({
   webhook: {
-    domain: "https://wise-houses-stare-85-76-145-100.loca.lt/",
+    domain: "https://rich-fans-see-88-193-171-164.loca.lt",
     port: 3000,
   },
 });

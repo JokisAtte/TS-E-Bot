@@ -1,4 +1,5 @@
-import { model, Schema } from "mongoose";
+import { connect, model, Schema } from "mongoose";
+import winston from "winston";
 
 interface IUser {
   handle: string;
@@ -8,7 +9,7 @@ interface IUser {
 
 interface IPayment {
   date: string;
-  amount: number;
+  total: number;
 }
 
 const userSchema = new Schema<IUser>({
@@ -17,24 +18,42 @@ const userSchema = new Schema<IUser>({
   balance: { type: Number, required: true },
 });
 
+const paymentSchema = new Schema<IPayment>({
+  date: { type: String, required: true },
+  total: { type: Number, required: true },
+});
+
 const User = model<IUser>("User", userSchema);
+const Payment = model<IPayment>("payment", paymentSchema);
+console.log("ollaa tääl");
+const logger = winston.createLogger();
 
-export const newUser = () => {
-    
+try {
+  connect(process.env.MONGO_DB_URI);
+} catch (e) {
+  logger.alert(e);
+}
+
+export const newUser = async (user?: IUser) => {
+  try {
+    const u = new User(user);
+    const s = await u.save();
+    console.log("hei");
+    console.log(s);
+    return s;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-export const findUser = () => {
-    
+export const findUser = () => {};
+
+export const newPurchase = () => {};
+
+export const getUsers = async () => {
+  const result = await User.find({}).exec();
+  //console.log(result);
+  return result;
 };
 
-export const newPurchase = () => {
-
-}
-
-export const getUsers = () => {
-
-}
-
-export const payDebts = () => {
-
-}
+export const payDebts = () => {};
