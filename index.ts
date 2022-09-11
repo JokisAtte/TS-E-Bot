@@ -6,16 +6,16 @@ if (process.env.TOKEN === "undefined")
 const bot = new Telegraf(process.env.TOKEN as string);
 
 bot.command("help", (ctx) => ctx.reply("Olen elossa"));
-bot.command("kaikki", (ctx) => {
+bot.command("kaikki", async (ctx) => {
   console.log("mäyy");
-  console.log("result", getUsers());
+  console.log("result", await getUsers());
   console.log("valmis");
   ctx.reply("Kaikki käyttäjät");
 });
 console.log(process.env.NODE_ENV);
 bot.launch({
   webhook: {
-    domain: "https://lucky-cooks-cover-84-249-61-0.loca.lt",
+    domain: "https://twenty-cloths-tease-84-249-61-0.loca.lt",
     port: 3000,
   },
 });
