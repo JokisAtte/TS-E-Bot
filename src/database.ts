@@ -25,7 +25,7 @@ const paymentSchema = new Schema<IPayment>({
 
 const User = model<IUser>("User", userSchema);
 const Payment = model<IPayment>("payment", paymentSchema);
-console.log("ollaa tääl");
+
 const logger = winston.createLogger();
 
 try {
