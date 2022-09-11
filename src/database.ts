@@ -1,35 +1,40 @@
+import moment from "moment";
 import { connect, model, Schema } from "mongoose";
 import winston from "winston";
+
+const dateFormat = "HH:mm:ss-DDMMYYY z";
 
 interface IUser {
   handle: string;
   tg_id: string;
   balance: number;
+  transactions: ITransaction[];
 }
 
-interface IPayment {
+interface ITransaction {
   date: string;
   total: number;
 }
+const transactionSchema = new Schema<ITransaction>({
+  date: { type: String, required: true },
+  total: { type: Number, required: true },
+});
+
+const Transaction = model<ITransaction>("transaction", transactionSchema);
 
 const userSchema = new Schema<IUser>({
   handle: { type: String },
   tg_id: { type: String },
   balance: { type: Number },
-});
-
-const paymentSchema = new Schema<IPayment>({
-  date: { type: String, required: true },
-  total: { type: Number, required: true },
+  transactions: { type: [Transaction] },
 });
 
 const User = model<IUser>("User", userSchema);
-const Payment = model<IPayment>("payment", paymentSchema);
 
 const logger = winston.createLogger();
 
 try {
-  connect(process.env.MONGO_DB_URI);
+  connect(String(process.env.MONGO_DB_URI));
 } catch (e) {
   logger.alert(e);
 }
@@ -40,6 +45,7 @@ export const newUser = async (sender: any) => {
       handle: sender.username,
       tg_id: sender.id,
       balance: 0,
+      transactions: [],
     });
     const s = await u.save();
     return true;
@@ -52,7 +58,15 @@ export const findUser = async (tg_id: any) => {
   return await User.find({ tg_id }).exec();
 };
 
-export const newPurchase = () => {};
+export const newPurchase = async (tg_id: number, sum: number) => {
+  const user = await findUser(tg_id);
+  if (user === undefined) return false;
+  // TODO: Lisää transaktio käyttäjän tietoihin, päivitä käyttäjän saldo
+  const thisTransaction = new Transaction({
+    date: moment().format(dateFormat),
+    total: sum,
+  });
+};
 
 export const getUsers = async () => {
   const result = await User.find({}).exec();
