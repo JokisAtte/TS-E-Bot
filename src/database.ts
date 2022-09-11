@@ -39,7 +39,7 @@ export const newUser = async (user?: IUser) => {
     const u = new User(user);
     const s = await u.save();
     console.log("hei");
-    console.log(s);
+    console.log(await s);
     return s;
   } catch (e) {
     console.log(e);
@@ -52,8 +52,7 @@ export const newPurchase = () => {};
 
 export const getUsers = async () => {
   const result = await User.find({}).exec();
-  //console.log(result);
-  return result;
+  return await result;
 };
 
 export const payDebts = () => {};

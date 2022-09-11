@@ -15,7 +15,7 @@ bot.command("kaikki", (ctx) => {
 console.log(process.env.NODE_ENV);
 bot.launch({
   webhook: {
-    domain: "https://rich-fans-see-88-193-171-164.loca.lt",
+    domain: "https://lucky-cooks-cover-84-249-61-0.loca.lt",
     port: 3000,
   },
 });
