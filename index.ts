@@ -1,60 +1,49 @@
 import "dotenv/config";
 import { Telegraf } from "telegraf";
+import { findUser } from "./src/database";
+
 import {
-  findUser,
-  getUsers,
-  isMsgFromCorrectGroup,
-  newUser,
-} from "./src/database";
+  helpHandler,
+  kaikkiHandler,
+  maksaHandler,
+  moroHandler,
+  ostaHandler,
+  piikkiHandler,
+} from "./src/commands/index";
+
 if (process.env.TOKEN === "undefined")
   throw new Error("Bot token must be provided");
 const bot = new Telegraf(process.env.TOKEN as string);
 
 // Listaa komennot
-bot.command("help", (ctx) => ctx.reply("Olen elossa"));
+bot.command("help", async (ctx) => {
+  if ((await findUser(ctx.from.id)) !== undefined) helpHandler(ctx);
+});
 
 // Listaa kaikki käyttäjät ja heidän velat
 // Käytettävissä myös aktiivicasessa
 bot.command("kaikki", async (ctx) => {
-  console.log("mäyy");
-  console.log("result", await getUsers());
-  console.log("valmis");
-  ctx.reply("Kaikki käyttäjät");
+  if ((await findUser(ctx.from.id)) !== undefined) kaikkiHandler(ctx);
 });
 
 // Maksa piikkiäsi pois
 bot.command("/maksa_piikki", async (ctx) => {
-  console.log("mäyy oon tää /maksa_piikki kissa :3");
-  ctx.reply("mäyy oon tää /maksa_piikki kissa :3");
+  if ((await findUser(ctx.from.id)) !== undefined) maksaHandler(ctx);
 });
 
 // Osta tuote. Lisää hinta piikkiin
 bot.command("/osta", async (ctx) => {
-  console.log("mäyy oon tää /osta kissa :3");
-  ctx.reply("mäyy oon tää /osta kissa :3");
+  if ((await findUser(ctx.from.id)) !== undefined) ostaHandler(ctx);
 });
 
 // Palauttaa käyttäjän piikin
 bot.command("/piikki", async (ctx) => {
-  console.log("mäyy oon tää /piikki kissa :3");
-  ctx.reply("mäyy oon tää /piikki kissa :3");
+  if ((await findUser(ctx.from.id)) !== undefined) piikkiHandler(ctx);
 });
 
 // Lisää uuden käyttäjän tietokantaan
 bot.command("moro", async (ctx) => {
-  if (
-    findUser(ctx.from.id) === undefined &&
-    isMsgFromCorrectGroup(ctx.chat.id)
-  ) {
-    (await newUser(ctx.from))
-      ? ctx.reply("Käyttäjä luotu. Lähetä viestit jatkossa yksityisviestillä")
-      : ctx.reply("Tapahtui virhe. Ota yhteys ylläpitoon");
-  } else if (
-    !isMsgFromCorrectGroup(ctx.chat.id) &&
-    findUser(ctx.from.id) !== undefined
-  ) {
-    ctx.reply("Käytä komentoja vain yksityisviestillä");
-  }
+  if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
 });
 
 bot.launch({
