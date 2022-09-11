@@ -13,9 +13,9 @@ interface IPayment {
 }
 
 const userSchema = new Schema<IUser>({
-  handle: { type: String, required: true },
-  tg_id: { type: String, required: true },
-  balance: { type: Number, required: true },
+  handle: { type: String },
+  tg_id: { type: String },
+  balance: { type: Number },
 });
 
 const paymentSchema = new Schema<IPayment>({
@@ -34,19 +34,37 @@ try {
   logger.alert(e);
 }
 
-export const newUser = async (user?: IUser) => {
+export const authenticateUser = async (id: string) => {
+  const user = await findUser(id);
+  if (user != undefined) return true;
+  return false;
+};
+
+export const isMsgFromCorrectGroup = (groupId: number | string) => {
+  console.log(groupId);
+  const idStr = String(groupId);
+  return (
+    idStr === process.env.GROUP_ID_AKTIIVICASE ||
+    idStr === process.env.GROUP_ID_E ||
+    idStr === process.env.GROUP_TEST
+  );
+};
+
+export const newUser = async (sender: any) => {
   try {
-    const u = new User(user);
+    const u = new User({
+      handle: sender.username,
+      tg_id: sender.id,
+      balance: 0,
+    });
     const s = await u.save();
-    console.log("hei");
-    console.log(await s);
-    return await s;
+    return true;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const findUser = () => {};
+export const findUser = (id: any) => {};
 
 export const newPurchase = () => {};
 
