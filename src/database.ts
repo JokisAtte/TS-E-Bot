@@ -16,8 +16,8 @@ interface ITransaction {
   total: number;
 }
 const transactionSchema = new Schema<ITransaction>({
-  date: { type: String, required: true },
-  total: { type: Number, required: true },
+  date: { type: String },
+  total: { type: Number },
 });
 
 const Transaction = model<ITransaction>("transaction", transactionSchema);
@@ -26,7 +26,7 @@ const userSchema = new Schema<IUser>({
   handle: { type: String },
   tg_id: { type: String },
   balance: { type: Number },
-  transactions: transactionSchema,
+  transactions: [transactionSchema],
 });
 
 const User = model<IUser>("User", userSchema);
@@ -58,18 +58,16 @@ export const findUser = async (tg_id: any) => {
   return await User.find({ tg_id }).exec();
 };
 
-export const newPurchase = async (tg_id: number, sum: number) => {
-  const user = await findUser(tg_id);
-  if (user === undefined) return false;
-  // TODO: Lisää transaktio käyttäjän tietoihin, päivitä käyttäjän saldo
+export const newPurchase = async (sum: number, user: any) => {
   const thisTransaction = new Transaction({
     date: moment().format(dateFormat),
     total: sum,
   });
+  console.log(user);
   user["transactions"].append(thisTransaction);
   user["balance"] += -1 * sum;
   User.findByIdAndUpdate(
-    { tg_id: tg_id },
+    { tg_id: user.tg_id },
     { $set: user },
     { new: true, upsert: true }
   );

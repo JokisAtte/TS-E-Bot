@@ -17,7 +17,8 @@ const bot = new Telegraf(process.env.TOKEN as string);
 
 // Listaa komennot
 bot.command("help", async (ctx) => {
-  if ((await findUser(ctx.from.id)) !== undefined) helpHandler(ctx);
+  const user = await findUser(ctx.from.id);
+  if (user !== undefined) helpHandler(ctx, user);
 });
 
 // Listaa kaikki käyttäjät ja heidän velat
@@ -33,7 +34,8 @@ bot.command("maksa_piikki", async (ctx) => {
 
 // Osta tuote. Lisää hinta piikkiin
 bot.command("osta", async (ctx) => {
-  if ((await findUser(ctx.from.id)) !== undefined) ostaHandler(ctx);
+  const user = await findUser(ctx.from.id);
+  if (user !== undefined) ostaHandler(ctx, user);
 });
 
 // Palauttaa käyttäjän piikin
@@ -43,12 +45,13 @@ bot.command("piikki", async (ctx) => {
 
 // Lisää uuden käyttäjän tietokantaan
 bot.command("moro", async (ctx) => {
-  if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
+  moroHandler(ctx);
+  //if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
 });
 
 bot.launch({
   webhook: {
-    domain: "https://twenty-cloths-tease-84-249-61-0.loca.lt",
+    domain: "https://better-waves-check-84-249-61-0.loca.lt",
     port: 3000,
   },
 });
