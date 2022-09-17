@@ -66,6 +66,13 @@ export const newPurchase = async (tg_id: number, sum: number) => {
     date: moment().format(dateFormat),
     total: sum,
   });
+  user["transactions"].append(thisTransaction);
+  user["balance"] += -1 * sum;
+  User.findByIdAndUpdate(
+    { tg_id: tg_id },
+    { $set: user },
+    { new: true, upsert: true }
+  );
 };
 
 export const getUsers = async () => {

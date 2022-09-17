@@ -27,17 +27,17 @@ bot.command("kaikki", async (ctx) => {
 });
 
 // Maksa piikkiäsi pois
-bot.command("/maksa_piikki", async (ctx) => {
+bot.command("maksa_piikki", async (ctx) => {
   if ((await findUser(ctx.from.id)) !== undefined) maksaHandler(ctx);
 });
 
 // Osta tuote. Lisää hinta piikkiin
-bot.command("/osta", async (ctx) => {
+bot.command("osta", async (ctx) => {
   if ((await findUser(ctx.from.id)) !== undefined) ostaHandler(ctx);
 });
 
 // Palauttaa käyttäjän piikin
-bot.command("/piikki", async (ctx) => {
+bot.command("piikki", async (ctx) => {
   if ((await findUser(ctx.from.id)) !== undefined) piikkiHandler(ctx);
 });
 
