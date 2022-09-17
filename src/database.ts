@@ -26,7 +26,7 @@ const userSchema = new Schema<IUser>({
   handle: { type: String },
   tg_id: { type: String },
   balance: { type: Number },
-  transactions: { type: [Transaction] },
+  transactions: transactionSchema,
 });
 
 const User = model<IUser>("User", userSchema);
