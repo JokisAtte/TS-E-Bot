@@ -51,7 +51,7 @@ bot.command("moro", async (ctx) => {
 
 bot.launch({
   webhook: {
-    domain: "https://better-waves-check-84-249-61-0.loca.lt",
+    domain: "https://thirty-jokes-hunt-84-249-61-0.loca.lt",
     port: 3000,
   },
 });

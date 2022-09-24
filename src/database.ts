@@ -64,13 +64,16 @@ export const newPurchase = async (sum: number, user: any) => {
     total: sum,
   });
   console.log(user);
-  user["transactions"].append(thisTransaction);
+  console.log(sum);
+  user.transactions.push(thisTransaction);
   user["balance"] += -1 * sum;
+  console.log("Päivitetty");
+  console.log(user);
   User.findByIdAndUpdate(
     { tg_id: user.tg_id },
     { $set: user },
     { new: true, upsert: true }
-  );
+  ).exec();
 };
 
 export const getUsers = async () => {
