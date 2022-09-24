@@ -2,11 +2,11 @@ import moment from "moment";
 import { connect, model, Schema } from "mongoose";
 import winston from "winston";
 
-const dateFormat = "HH:mm:ss-DDMMYYY z";
+const dateFormat = "HH:mm:ss-DDMMYY z";
 
 interface IUser {
   handle: string;
-  tg_id: string;
+  userid: string;
   balance: number;
   transactions: ITransaction[];
 }
@@ -24,7 +24,7 @@ const Transaction = model<ITransaction>("transaction", transactionSchema);
 
 const userSchema = new Schema<IUser>({
   handle: { type: String },
-  tg_id: { type: String },
+  userid: { type: String },
   balance: { type: Number },
   transactions: [transactionSchema],
 });
@@ -43,7 +43,7 @@ export const newUser = async (sender: any) => {
   try {
     const u = new User({
       handle: sender.username,
-      tg_id: sender.id,
+      userid: sender.id,
       balance: 0,
       transactions: [],
     });
@@ -54,26 +54,23 @@ export const newUser = async (sender: any) => {
   }
 };
 
-export const findUser = async (tg_id: any) => {
-  return await User.find({ tg_id }).exec();
+export const findUser = async (userid: any) => {
+  return await User.find({ userid: userid }).exec()[0];
 };
 
 export const newPurchase = async (sum: number, user: any) => {
   const thisTransaction = new Transaction({
     date: moment().format(dateFormat),
-    total: sum,
+    total: -1 * sum,
   });
-  console.log(user);
-  console.log(sum);
   user.transactions.push(thisTransaction);
-  user["balance"] += -1 * sum;
-  console.log("Päivitetty");
-  console.log(user);
-  User.findByIdAndUpdate(
-    { tg_id: user.tg_id },
+  user.balance += -1 * sum;
+  const response = await User.findOneAndUpdate(
+    { userid: user.userid },
     { $set: user },
     { new: true, upsert: true }
   ).exec();
+  return response;
 };
 
 export const getUsers = async () => {
@@ -81,4 +78,17 @@ export const getUsers = async () => {
   return result;
 };
 
-export const payDebts = () => {};
+export const payDebts = async (sum: number, user: any) => {
+  const thisTransaction = new Transaction({
+    date: moment().format(dateFormat),
+    total: sum,
+  });
+  user.transactions.push(thisTransaction);
+  user.balance += sum;
+  const response = await User.findOneAndUpdate(
+    { userid: user.userid },
+    { $set: user },
+    { new: true, upsert: true }
+  ).exec();
+  return response;
+};

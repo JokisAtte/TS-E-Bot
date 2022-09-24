@@ -2,6 +2,7 @@ import { newUser } from "../database";
 
 export const moroHandler = async (ctx: any) => {
   //Väliaikainen toteutus
+  console.log("uus käyttäjä");
   newUser(ctx.from);
   //oikea toteutus
   /*   if (

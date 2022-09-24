@@ -29,13 +29,16 @@ bot.command("kaikki", async (ctx) => {
 
 // Maksa piikkiäsi pois
 bot.command("maksa_piikki", async (ctx) => {
-  if ((await findUser(ctx.from.id)) !== undefined) maksaHandler(ctx);
+  const user = await findUser(ctx.from.id);
+  if (user !== undefined) maksaHandler(ctx, user);
+  else ctx.reply("Jokin meni vikaan");
 });
 
 // Osta tuote. Lisää hinta piikkiin
 bot.command("osta", async (ctx) => {
   const user = await findUser(ctx.from.id);
   if (user !== undefined) ostaHandler(ctx, user);
+  else ctx.reply("Jokin meni vikaan");
 });
 
 // Palauttaa käyttäjän piikin
@@ -49,9 +52,15 @@ bot.command("moro", async (ctx) => {
   //if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
 });
 
+//testikomento vastaako botti
+bot.command("vastaa", async (ctx) => {
+  ctx.reply("Mjäy :33");
+  //if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
+});
+
 bot.launch({
   webhook: {
-    domain: "https://thirty-jokes-hunt-84-249-61-0.loca.lt",
+    domain: "https://fresh-candies-lay-84-249-61-0.loca.lt",
     port: 3000,
   },
 });
