@@ -55,7 +55,8 @@ export const newUser = async (sender: any) => {
 };
 
 export const findUser = async (userid: any) => {
-  return await User.find({ userid: userid }).exec()[0];
+  const u = await User.find({ userid: userid }).exec();
+  return u[0];
 };
 
 export const newPurchase = async (sum: number, user: any) => {

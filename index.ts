@@ -65,5 +65,11 @@ bot.launch({
   },
 });
 
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+process.once("SIGINT", () => {
+  console.log("SIGINT");
+  bot.stop("SIGINT");
+});
+process.once("SIGTERM", () => {
+  console.log("SIGTERM");
+  bot.stop("SIGTERM");
+});
