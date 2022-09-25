@@ -16,6 +16,7 @@ if (process.env.TOKEN === "undefined")
 const bot = new Telegraf(process.env.TOKEN as string);
 
 // Listaa komennot
+// TODO: Implementoi
 bot.command("help", async (ctx) => {
   const user = await findUser(ctx.from.id);
   if (user !== undefined) helpHandler(ctx, user);
@@ -23,12 +24,14 @@ bot.command("help", async (ctx) => {
 
 // Listaa kaikki käyttäjät ja heidän velat
 // Käytettävissä myös aktiivicasessa
+// TODO: Implementoi
 bot.command("kaikki", async (ctx) => {
   if ((await findUser(ctx.from.id)) !== undefined) kaikkiHandler(ctx);
 });
 
 // Maksa piikkiäsi pois
-bot.command("maksa_piikki", async (ctx) => {
+bot.command("maksa_velat", async (ctx) => {
+  //TODO ilmoittaa ryhmään (esim aktiivit) että joku maksoi piikkiä pois
   const user = await findUser(ctx.from.id);
   if (user !== undefined) maksaHandler(ctx, user);
   else ctx.reply("Jokin meni vikaan");
@@ -36,12 +39,14 @@ bot.command("maksa_piikki", async (ctx) => {
 
 // Osta tuote. Lisää hinta piikkiin
 bot.command("osta", async (ctx) => {
+  //TODO: Hyväksy vain privaviestit, jos ei priva ohjaa käyttämään bottia oikein
   const user = await findUser(ctx.from.id);
   if (user !== undefined) ostaHandler(ctx, user);
   else ctx.reply("Jokin meni vikaan");
 });
 
 // Palauttaa käyttäjän piikin
+// TODO: Implementoi
 bot.command("piikki", async (ctx) => {
   if ((await findUser(ctx.from.id)) !== undefined) piikkiHandler(ctx);
 });
@@ -49,18 +54,16 @@ bot.command("piikki", async (ctx) => {
 // Lisää uuden käyttäjän tietokantaan
 bot.command("moro", async (ctx) => {
   moroHandler(ctx);
-  //if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
 });
 
 //testikomento vastaako botti
 bot.command("vastaa", async (ctx) => {
   ctx.reply("Mjäy :33");
-  //if ((await findUser(ctx.from.id)) !== undefined) moroHandler(ctx);
 });
 
 bot.launch({
   webhook: {
-    domain: "https://fresh-candies-lay-84-249-61-0.loca.lt",
+    domain: "https://stupid-glasses-stare-84-249-61-0.loca.lt",
     port: 3000,
   },
 });

@@ -56,6 +56,7 @@ export const newUser = async (sender: any) => {
 
 export const findUser = async (userid: any) => {
   const u = await User.find({ userid: userid }).exec();
+  //User is returned in a list from database. Use u[0] to return the user object only
   return u[0];
 };
 
@@ -66,12 +67,18 @@ export const newPurchase = async (sum: number, user: any) => {
   });
   user.transactions.push(thisTransaction);
   user.balance += -1 * sum;
-  const response = await User.findOneAndUpdate(
-    { userid: user.userid },
-    { $set: user },
-    { new: true, upsert: true }
-  ).exec();
-  return response;
+  try {
+    const response = await User.findOneAndUpdate(
+      { userid: user.userid },
+      { $set: user },
+      { new: true, upsert: true }
+    )
+      .orFail()
+      .exec();
+    return response;
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getUsers = async () => {
@@ -86,10 +93,16 @@ export const payDebts = async (sum: number, user: any) => {
   });
   user.transactions.push(thisTransaction);
   user.balance += sum;
-  const response = await User.findOneAndUpdate(
-    { userid: user.userid },
-    { $set: user },
-    { new: true, upsert: true }
-  ).exec();
-  return response;
+  try {
+    const response = await User.findOneAndUpdate(
+      { userid: user.userid },
+      { $set: user },
+      { new: true, upsert: true }
+    )
+      .orFail()
+      .exec();
+    return response;
+  } catch (e) {
+    console.log("Virhe!", e);
+  }
 };
