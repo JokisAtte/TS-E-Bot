@@ -1,1 +1,2 @@
-web: python ./src/main.py $PORT
+web: npm run prod
+
