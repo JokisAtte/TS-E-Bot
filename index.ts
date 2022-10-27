@@ -80,7 +80,7 @@ bot.command('vastaa', async (ctx) => {
 
 bot.launch({
     webhook: {
-        domain: 'https://true-bats-decide-84-249-61-0.loca.lt',
+        domain: 'https://elrambot.herokuapp.com/',
         port: 3000,
     },
 })
