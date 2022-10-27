@@ -80,7 +80,7 @@ bot.command('vastaa', async (ctx) => {
 
 bot.launch({
     webhook: {
-        domain: 'https://elrambot.herokuapp.com/',
+        domain: 'https://elrambot.herokuapp.com/' + process.env.TOKEN,
         port: 3000,
     },
 })
