@@ -1,35 +1,36 @@
 {
-  "name": "ts-e-bot",
-  "version": "1.0.0",
-  "description": "Typescript rewire of the not very loved (by the developers) first version",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "ts-node index.ts",
-    "start": "SET NODE_ENV=production && ts-node index.ts",
-    "dev": "SET NODE_ENV=development && ts-node index.ts"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JokisAtte/TS-E-Bot.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JokisAtte/TS-E-Bot/issues"
-  },
-  "homepage": "https://github.com/JokisAtte/TS-E-Bot#readme",
-  "dependencies": {
-    "body-parser": "^1.20.0",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "moment": "^2.29.4",
-    "mongoose": "^6.5.2",
-    "telegraf": "^4.8.6",
-    "winston": "^3.8.1"
-  },
-  "devDependencies": {
-    "@types/node": "^18.7.9"
-  }
+    "name": "ts-e-bot",
+    "version": "1.0.0",
+    "description": "Typescript rewire of the not very loved (by the developers) first version",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "local": "ts-node index.ts",
+        "start": "SET NODE_ENV=production && ts-node index.ts",
+        "dev": "ts-node index.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JokisAtte/TS-E-Bot.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JokisAtte/TS-E-Bot/issues"
+    },
+    "homepage": "https://github.com/JokisAtte/TS-E-Bot#readme",
+    "dependencies": {
+        "body-parser": "^1.20.0",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "moment": "^2.29.4",
+        "mongoose": "^6.5.2",
+        "telegraf": "^4.8.6",
+        "winston": "^3.8.1"
+    },
+    "devDependencies": {
+        "@types/node": "^18.7.9"
+    }
 }
+

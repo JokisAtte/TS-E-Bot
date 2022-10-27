@@ -1,7 +1,9 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node"
-  }
+    "compilerOptions": {
+        "lib": ["ES2015", "DOM"],
+        "esModuleInterop": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node"
+    }
 }
+

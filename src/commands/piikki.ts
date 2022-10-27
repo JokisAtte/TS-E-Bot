@@ -1,3 +1,4 @@
-export const piikkiHandler = async (ctx: any) => {
-  ctx.reply("mäyy oon tää /piikki kissa :3");
-};
+export const piikkiHandler = async (ctx: any, user: any) => {
+    ctx.reply(`${user.handle}: ${user.balance} €`)
+}
+

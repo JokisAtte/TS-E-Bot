@@ -54,7 +54,7 @@ export const newUser = async (sender: any) => {
     }
 }
 
-export const findUser = async (userid: any) => {
+export const findUser = async (userid: string) => {
     const u = await User.find({ userid: userid }).exec()
     //User is returned in a list from database. Use u[0] to return the user object only
     return u[0]
@@ -106,3 +106,4 @@ export const payDebts = async (sum: number, user: any) => {
         console.log('Virhe!', e)
     }
 }
+
